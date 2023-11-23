@@ -4,44 +4,56 @@ export interface Todo {
     completed: boolean;
 }
 
-const todos: Todo[] = [
-    {
-        id: 1,
-        title: "Learn css",
-        completed: false
-    },
-    {
-        id: 2,
-        title: "Learn JavaScript",
-        completed: false
-    },
-    {
-        id: 3,
-        title: "Learn React",
-        completed: false
-    },
-];
-
 export const fetchTodos = async (query = ''): Promise<Todo[]> => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const data = await fetch('http://localhost:3000/todos');
     console.log('fetching todos');
+    // const filteredTodos = todos.filter(todo => todo.title.toLocaleLowerCase().includes(query));
+    return data.json();
+};
 
-    const filteredTodos = todos.filter(todo => todo.title.toLocaleLowerCase().includes(query));
-
-    return [...filteredTodos];
+export const fetchTodo = async (id: number): Promise<Todo> => {
+    const data = await fetch(`http://localhost:3000/todos/${id}`);
+    console.log('fetching one todo');
+    // const filteredTodos = todos.filter(todo => todo.title.toLocaleLowerCase().includes(query));
+    return data.json();
 };
 
 export const addTodo = async (todo: Pick<Todo, 'title'>): Promise<Todo> => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('adding new todo');
-
     const newTodo = {
-        id: todos.length + 1,
+        id: Date.now(),
         title: todo.title,
         completed: false
     }
+    const data = await fetch('http://localhost:3000/todos', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newTodo)
+    });
+    console.log('adding new todo');
 
-    todos.push(newTodo);
+    return data.json();
+};
 
-    return newTodo;
+export const editTodo = async (updatedTodo: Todo): Promise<Todo> => {
+    const data = await fetch(`http://localhost:3000/todos/${updatedTodo.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedTodo)
+    });
+    console.log('edit new todo');
+
+    return data.json();
+};
+
+export const deleteTodo = async (id: number): Promise<Todo> => {
+    const data = await fetch(`http://localhost:3000/todos/${id}`, {
+        method: "DELETE",
+    });
+    console.log('adding new todo');
+
+    return data.json();
 };

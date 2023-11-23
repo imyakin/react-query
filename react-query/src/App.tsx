@@ -1,7 +1,9 @@
 import { Todos } from './components/Todos'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import TodoDetails from './components/TodoDetails'
+import TodoEdit from './components/TodoEdit'
 
 function App() {
 
@@ -16,7 +18,11 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <Todos />
+      <Routes>
+        <Route path='/' element={<Todos/>}/>
+        <Route path='/todo/:id' element={<TodoDetails/>}/>
+        <Route path='/todo/:id/edit' element={<TodoEdit/>} />
+      </Routes>
     </>
   )
 }

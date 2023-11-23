@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "id": 2,
+      "title": "Learn JavaScript",
+      "completed": false
+    },
+    {
+      "id": 1700745091361,
+      "title": "newTodo hah",
+      "completed": false
+    },
+    {
+      "id": 1700747446216,
+      "title": "Learn css asap",
+      "completed": false
+    }
+  ]
+}
